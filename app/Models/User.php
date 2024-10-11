@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', 'is_blocked'
     ];
 
     /**
@@ -73,5 +74,8 @@ class User extends Authenticatable
         }
 
         return $roles;
+    }
+    public function customers() {
+        return $this->hasMany(Customer::class, 'created_by');
     }
 }

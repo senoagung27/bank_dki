@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('username')->unique()->after('name');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('foto')->nullable();
             $table->string('token')->nullable();
-            $table->string('role'); // 'CS' or 'Supervisor'
+            $table->string('roles'); // 'CS' or 'Supervisor'
             $table->boolean('is_blocked')->default(false);
             $table->rememberToken();
             $table->timestamps();

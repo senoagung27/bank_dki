@@ -21,4 +21,23 @@ class Customer extends Model
 
     ];
 
+    // protected $fillable = [
+    //     'name',
+    //     'birth_place',
+    //     'birth_date',
+    //     'gender',
+    //     'job_id',
+    //     'address',
+    //     'initial_deposit',
+    //     'created_by',
+    // ];
+
+    public function job() {
+        return $this->belongsTo(Job::class);
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\JobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,18 @@ Route::group(['middleware' => 'auth'], function(){
 		return view('content.pages.dashboard_pelanggan'); 
 	})->name('dashboard.pelanggan');
 
+	
+	// Route::get('/customer', [CustomerController::class, 'index'])->name('customers.index');
+	Route::get('/customer', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/customer/create', [CustomerController::class, 'create'])->name('customers.create');
+    Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
+    Route::post('/customer/approve/{id}', [CustomerController::class, 'approve'])->name('customers.approve');
+    Route::get('/customer/edit/{id}', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::put('/customer/update/{id}', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/customer/delete/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::get('/customer/show/{id}', [CustomerController::class, 'show'])->name('customers.show');
+
+	Route::middleware(['super_admin'])->group(function () {
 	//only those have manage_user permission will get access
 	// Route::group(['middleware' => 'can:manage_user'], function(){
 	// Route::get('/dashboard/pelanggan', [HomeController::class,'dashboard_pelanggan'])->name('dashboard-pelanggan');
@@ -68,36 +81,45 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('/user/delete/{id}', [UserController::class,'delete']);
 	// });
 
-	//only those have manage_role permission will get access
 	// Route::group(['middleware' => 'can:manage_role|manage_user'], function(){
 		Route::get('/roles', [RolesController::class,'index'])->name('index-roles');
-		Route::get('/role/get-list', [RolesController::class,'getRoleList']);
-		Route::post('/role/create', [RolesController::class,'create']);
-		Route::get('/role/edit/{id}', [RolesController::class,'edit']);
-		Route::post('/role/update', [RolesController::class,'update']);
-		Route::get('/role/delete/{id}', [RolesController::class,'delete']);
+		Route::get('/roles/create', [RolesController::class, 'create'])->name('create-roles');
+		Route::get('/roles/show/{id}', [RolesController::class,'show'])->name('show.roles');
+		Route::post('/roles/store', [RolesController::class,'store'])->name('store-roles');
+		Route::get('/roles/edit/{id}', [RolesController::class,'edit'])->name('edit-roles');
+		Route::post('/roles/update/{id}', [RolesController::class,'update'])->name('update-roles');
+		Route::get('/roles/delete/{id}', [RolesController::class,'destroy'])->name('delete-roles');
 	// });
+	
 
 
-	//only those have manage_permission permission will get access
-	// Route::group(['middleware' => 'can:manage_permission|manage_user'], function(){
-		Route::get('/permission', [PermissionController::class,'index'])->name('index-permission');
-		Route::get('/permission/get-list', [PermissionController::class,'getPermissionList']);
-		Route::post('/permission/create', [PermissionController::class,'create']);
-		Route::get('/permission/update', [PermissionController::class,'update']);
-		Route::get('/permission/delete/{id}', [PermissionController::class,'delete']);
-	// });
+	// Permission Management Routes (Only those with manage_permission|manage_user can access)
+// Route::group(['middleware' => 'can:manage_permission|manage_user'], function(){
+    Route::get('/permissions', [PermissionController::class,'index'])->name('index-permission');
+    Route::get('/permission/create', [PermissionController::class,'create'])->name('create-permission');
+    Route::post('/permission/store', [PermissionController::class,'store'])->name('store-permission');
+    Route::get('/permission/edit/{id}', [PermissionController::class,'edit'])->name('edit-permission');
+    Route::post('/permission/update/{id}', [PermissionController::class,'update'])->name('update-permission');
+    Route::get('/permission/delete/{id}', [PermissionController::class,'destroy'])->name('delete-permission');
+// });
 
 	// get permissions
 	Route::get('get-role-permissions-badge', [PermissionController::class,'getPermissionBadgeByRole']);
 
 
 
-	Route::get('/pelanggan', [CustomerController::class,'index'])->name('index-pelanggan');
-		Route::get('/role/get-list', [CustomerController::class,'getRoleList']);
-		Route::post('/role/create', [CustomerController::class,'create']);
-		Route::get('/role/edit/{id}', [CustomerController::class,'edit']);
-		Route::post('/role/update', [CustomerController::class,'update']);
-		Route::get('/role/delete/{id}', [CustomerController::class,'delete']);
+    
 	
+
+
+	Route::get('/job', [JobController::class, 'index'])->name('job.index');
+    Route::get('/job/create', [JobController::class, 'create'])->name('job.create');
+    Route::post('/job/store', [JobController::class, 'store'])->name('job.store');
+    Route::post('/job/approve/{id}', [JobController::class, 'approve'])->name('job.approve');
+    Route::get('/job/edit/{id}', [JobController::class, 'edit'])->name('job.edit');
+    Route::put('/job/update/{id}', [JobController::class, 'update'])->name('job.update');
+    Route::delete('/job/delete/{id}', [JobController::class, 'destroy'])->name('job.destroy');
+    Route::get('/job/show/{id}', [JobController::class, 'show'])->name('job.show');
+
+});
 });

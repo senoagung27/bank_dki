@@ -20,14 +20,30 @@
                     <table class="datatables-permissions table border-top">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th></th>
+                                <th>#</th> <!-- For the row numbers -->
+                                <th>Name</th>
                                 <th>Name</th>
                                 <th>Assigned To</th>
-                                <th>Created Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach ($permissions as $key => $permission)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td> <!-- Automatically incrementing number -->
+                                    <td>{{ $permission->name }}</td>
+                                    <td>{{ $permission->guard_name }}</td>
+                                    <td>
+                                        <a href="javascript:void(0);" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editPermissionModal">
+                                            <i class="ti ti-pencil"></i> Edit
+                                        </a>
+                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger">
+                                            <i class="ti ti-trash"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

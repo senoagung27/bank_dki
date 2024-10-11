@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('birth_place');
             $table->date('birth_date');
             $table->enum('gender', ['laki-laki', 'wanita']);
-            $table->foreignId('job_id')->constrained('jobs');
+            // $table->foreignId('job_id')->constrained('jobs');
             $table->text('address');
             $table->decimal('initial_deposit', 15, 2); // Format rupiah
             $table->string('status')->default('Menunggu Approval');

@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Models\Job;
+use Yajra\DataTables\Facades\DataTables;
 
 class CustomerController extends Controller
 {
-    private $title = 'Manajemen Kategori';
+    private $title = 'Manajemen Customer';
     private $li_1 = 'Index';
+
+    
 
     public function index(Request $request)
     {
@@ -16,46 +20,52 @@ class CustomerController extends Controller
         $title['li_1'] = $this->li_1;
         // $data = Customer::get();
          // Fetching query parameters
-    $limit = $request->query('limit') ? (int) $request->query('limit') : 10;
-    $page = $request->query('page') ? (int) $request->query('page') - 1 : 0;
+         $customers = Customer::with(['job'])->paginate(10); // Server-side pagination
 
-    // Defining company names to filter
-    $companyNames = [
-        'Krakatau Smart',
-        'Nusa Network Prakarsa',
-        'Dinas Bina Marga dan Sumber Daya Air',
-        'Demo'
-    ];
-
-    // Querying the database
-    $query = Customer::whereIn('company_name', $companyNames)
-        ->skip($page * $limit)
-        ->take($limit)
-        ->get(['id', 'name', 'phone', 'address', 'email', 'company_name', 'expired_date', 'start_date', 'foto', 'note', 'website']);
-    
-    // Counting the total records that match the criteria
-    $total = Customer::whereIn('company_name', $companyNames)->count();
-
-    // Formatting the response
-    $data = [
-        'count' => $total,
-        'rows' => $query // This should be a collection of Customer objects
-    ];
-
-    return view('content.pages.customer.index', [
-        'title' => $title, 
-        'data' => $data
-    ]);
-         // Passing data to the view
-        //  return view('content.pages.customer.index', compact('title', 'data'));
+         return view('content.pages.customer.index', compact('customers'));
     }
+    // public function index(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $query = Customer::with('job')->select('customers.*');
+
+    //         return DataTables::eloquent($query)
+    //             ->addColumn('action', function($customer) {
+    //                 $action = '';
+    //                 if (auth()->user()->roles == 'supervisi') {
+    //                     if ($customer->status == 'Menunggu Approval') {
+    //                         $action .= '<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approvalModal'.$customer->id.'">
+    //                                         <i class="fas fa-check"></i> Approve
+    //                                     </button>';
+    //                     } else {
+    //                         $action .= '<span class="text-muted">Approved</span>';
+    //                     }
+    //                 }
+    //                 return $action;
+    //             })
+    //             ->editColumn('birth_date', function($customer) {
+    //                 return $customer->birth_place . ', ' . \Carbon\Carbon::parse($customer->birth_date)->format('d M Y');
+    //             })
+    //             ->editColumn('gender', function($customer) {
+    //                 return $customer->gender == 'male' ? 'Laki-laki' : 'Perempuan';
+    //             })
+    //             ->editColumn('initial_deposit', function($customer) {
+    //                 return 'Rp ' . number_format($customer->initial_deposit, 0, ',', '.');
+    //             })
+    //             ->make(true);
+    //     }
+
+    //     return view('content.pages.customer.index');
+    // }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $jobs = Job::all();
+        return view('content.pages.customer.create', compact('jobs'));
     }
 
     /**
@@ -63,7 +73,48 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string|unique:customers|regex:/^[\pL\s\-]+$/u', // Tidak mengandung angka dan simbol
+        //     'birth_place' => 'required|string',
+        //     'birth_date' => 'required|date',
+        //     'job_id' => 'required|exists:jobs,id',
+        //     'address' => 'required|string',
+        //     'initial_deposit' => 'required|numeric',
+        // ]);
+         // Check if customer already exists (optional)
+         $existingCustomer = Customer::where('name', $request->input('name'))->first();
+
+         if ($existingCustomer) {
+             // Redirect back with a warning message if the customer already exists
+             return redirect()->back()->withInput()->with('warning', 'Data customer dengan nama ' . $existingCustomer->name . ' sudah ada!');
+         }
+     
+
+        Customer::create([
+            'name' => $request->name,
+            'birth_place' => $request->birth_place,
+            'birth_date' => $request->birth_date,
+            'gender' => $request->gender,
+            'job_id' => $request->job_id,
+            'address' => $request->address,
+            'initial_deposit' => $request->initial_deposit,
+            'created_by' => auth()->user()->id,
+        ]);
+
+        return redirect('/customer')->with('success', 'Pengajuan pembukaan rekening berhasil dikirim.');
+    }
+
+    public function approve($id) {
+        $customer = Customer::findOrFail($id);
+        $customer->update([
+            'status' => 'Disetujui',
+            'approved_by' => auth()->user()->id,
+        ]);
+
+        // Send email to CS
+        // Mail::to($customer->creator->email)->send(new ApprovalNotification($customer));
+
+        return redirect('/customer')->with('success', 'Pengajuan telah disetujui.');
     }
 
     /**

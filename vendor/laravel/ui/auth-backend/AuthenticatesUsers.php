@@ -69,9 +69,24 @@ trait AuthenticatesUsers
      */
     protected function validateLogin(Request $request)
     {
+        // $request->validate([
+        //     $this->username() => 'required|string',
+        //     'password' => 'required|string',
+        // ]);
         $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
+            // $this->username() => 'required|string',
+            'email' => 'required|email',
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'regex:/[@$!%*?&#]/'  // must contain a special character
+            ],
+        ], [
+            'password.min' => 'Password must be at least 8 characters.',
+            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character.',
         ]);
     }
 

@@ -44,6 +44,10 @@
     <link rel="stylesheet"href="{{ URL::asset('../../assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('../../assets/vendor/libs/mapbox-gl/mapbox-gl.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('../../assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('../../assets/vendor/libs/datatables-select-bs5/select.bootstrap5.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('../../assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('../../assets/vendor/libs/datatables-fixedcolumns-bs5/fixedcolumns.bootstrap5.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('../../assets/vendor/libs/datatables-fixedheader-bs5/fixedheader.bootstrap5.css') }}" />
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ URL::asset('../../assets/vendor/css/pages/app-logistics-fleet.css') }}" />
@@ -514,8 +518,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-medium d-block">John Doe</span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <span class="fw-medium d-block">{{ Auth::user()->name }}</span>
+                                                    <small class="text-muted">{{ Auth::user()->roles }}</small>
                                                 </div>
                                             </div>
                                         </a>
@@ -695,6 +699,7 @@
     <script src="{{ URL::asset('../../assets/js/forms-selects.js') }}"></script>
     <script src="{{ URL::asset('../../assets/js/forms-tagify.js') }}"></script>
     <script src="{{ URL::asset('../../assets/js/forms-typeahead.js') }}"></script>
+    <script src="{{ URL::asset('../../assets/js/tables-datatables-extensions.js') }}"></script>
 </body>
 
 </html>

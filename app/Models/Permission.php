@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
-use Spatie\Permission\Models\Permission as OriginalPermission;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Permission extends OriginalPermission
+class Permission extends Model
 {
-    protected $fillable = [
-        'name',
-        'guard_name',
-        'updated_at',
-        'created_at',
-    ];
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     */
+    protected $fillable = ['name', 'guard_name'];
+
+    /**
+     * The roles that belong to the permission.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

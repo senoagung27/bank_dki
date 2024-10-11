@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Permission; // Assuming you're using a Permission model
+use Illuminate\Support\Facades\Validator;
 
 class PermissionController extends Controller
 {
@@ -11,7 +13,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('content.pages.permission.index');
+        $permissions = Permission::all();
+        return view('content.pages.permission.index', compact('permissions'));
     }
 
     /**
@@ -19,7 +22,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('content.pages.permission.create');
     }
 
     /**
@@ -27,7 +30,25 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:permissions,name',
+            'guard_name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+
+        // Store the new permission
+        Permission::create([
+            'name' => $request->name,
+            'guard_name' => $request->guard_name,
+        ]);
+
+        return redirect()->route('permissions.index')->with('success', 'Permission created successfully.');
     }
 
     /**
@@ -35,7 +56,8 @@ class PermissionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+        return view('content.pages.permission.show', compact('permission'));
     }
 
     /**
@@ -43,7 +65,8 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+        return view('content.pages.permission.edit', compact('permission'));
     }
 
     /**
@@ -51,7 +74,26 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:permissions,name,' . $id,
+            'guard_name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+
+        // Find the permission and update its data
+        $permission = Permission::findOrFail($id);
+        $permission->update([
+            'name' => $request->name,
+            'guard_name' => $request->guard_name,
+        ]);
+
+        return redirect()->route('permissions.index')->with('success', 'Permission updated successfully.');
     }
 
     /**
@@ -59,6 +101,9 @@ class PermissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+        $permission->delete();
+
+        return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully.');
     }
 }

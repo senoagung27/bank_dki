@@ -12,9 +12,9 @@
             <div class="col-xl-4 mb-4 col-lg-5 col-12">
                 <div class="card">
                     <div class="d-flex align-items-end row">
-                        <div class="col-7">
+                        <div class="col-8">
                             <div class="card-header">
-                                <h5 class="card-title mb-2">Welcome Admin!</h5>
+                                <h5 class="card-title mb-2 text-wrap">Welcome {{ Auth::user()->name }}!</h5>
                                 <small class="mt-2">Study the past, if you would divine the future.”</small>
                                 {{-- <div class="d-flex justify-content-between mb-3">
                                     <h5 class="card-title mb-5">Welcome Admin!</h5>
@@ -28,8 +28,8 @@
                                 <a href="javascript:;" class="btn btn-primary">View Sales</a>
                             </div> --}}
                         </div>
-                        <div class="col-5 text-center text-sm-left">
-                            <div class="card-body pb-0 px-0 px-md-4">
+                        <div class="col-4 text-center text-sm-left">
+                            <div class="card-body pb-0 px-0">
                                 <img src="../../assets/img/illustrations/card-advance-sale.png" height="140"
                                     alt="view sales" />
                             </div>
