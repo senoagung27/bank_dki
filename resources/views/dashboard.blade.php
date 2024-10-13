@@ -56,12 +56,12 @@
                                         <i class="ti ti-user"></i>
                                     </div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">4</h5>
+                                        <h5 class="mb-0"></h5>
                                         <small>Total Pelanggan</small>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-6">
+                            {{-- <div class="col-md-3 col-6">
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-info me-3 p-2">
                                         <i class="ti ti-sitemap"></i>
@@ -71,8 +71,8 @@
                                         <small>Total Reseller</small>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 col-6">
+                            </div> --}}
+                            {{-- <div class="col-md-3 col-6">
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-danger me-3 p-2">
                                         <i class="ti ti-device-imac"></i>
@@ -82,7 +82,7 @@
                                         <small>Total Perangkat</small>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-3 col-6">
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-success me-3 p-2">
@@ -99,7 +99,7 @@
                 </div>
             </div>
             <!--/ Statistics -->
-            <div class="card mb-6">
+            {{-- <div class="card mb-6">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div class="card-title mb-0">
                         <h5 class="mb-1">Pelanggan</h5>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        {{-- <div class="col-md-6 col-xxl-4 mb-6">
+                        <div class="col-md-6 col-xxl-4 mb-6">
                             <div class="card h-100">
                                 <div class="card-body">
                                     <div class="bg-label-primary rounded text-center mb-4 pt-4">
@@ -155,7 +155,7 @@
                                     <a href="{{ route('dashboard.pelanggan') }}" class="btn btn-primary w-100">Pilih</a>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="col-md-6 col-xxl-4 mb-6">
                             <div class="card h-100">
                                 <div class="card-body">
@@ -304,7 +304,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- / Content -->
