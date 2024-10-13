@@ -6,6 +6,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -112,8 +113,8 @@ class CustomerController extends Controller
         ]);
 
         // Send email to CS
-        // Mail::to($customer->creator->email)->send(new ApprovalNotification($customer));
-
+        Mail::to('cs@test.com')->send(new \App\Mail\ApprovalNotification($customer));
+        
         return redirect('/customer')->with('success', 'Pengajuan telah disetujui.');
     }
 

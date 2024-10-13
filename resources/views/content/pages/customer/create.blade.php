@@ -130,6 +130,121 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="province_id">Provinsi</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-map"></i></span>
+                                            <select class="form-control" id="province_id" name="province_id" required>
+                                                <option value="">Pilih Provinsi</option>
+                                                @foreach ($provinces as $province)
+                                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="city_id">Kota/Kabupaten</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                            <select class="form-control" id="city_id" name="city_id" required>
+                                                <option value="">Pilih Kota/Kabupaten</option>
+                                                @foreach ($cities as $city)
+                                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="district_id">Kecamatan</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-map-signs"></i></span>
+                                            <select class="form-control" id="district_id" name="district_id" required>
+                                                <option value="">Pilih Kecamatan</option>
+                                                @foreach ($districts as $district)
+                                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="village_id">Kelurahan</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                            <select class="form-control" id="village_id" name="village_id" required>
+                                                <option value="">Pilih Kelurahan</option>
+                                                @foreach ($villages as $village)
+                                                    <option value="{{ $village->id }}">{{ $village->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="address_street">Nama Jalan</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-road"></i></span>
+                                            <input type="text" id="address_street" class="form-control" name="address_street"
+                                                placeholder="Nama Jalan" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="address_rt">RT</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                            <input type="text" id="address_rt" class="form-control" name="address_rt"
+                                                placeholder="RT" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col-12">
+                                <div class="mb-1 row">
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="address_rw">RW</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                            <input type="text" id="address_rw" class="form-control" name="address_rw"
+                                                placeholder="RW" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            
                             <div class="col-12">
                                 <div class="mb-1 row">
                                     <div class="col-sm-3">
