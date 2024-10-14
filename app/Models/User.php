@@ -23,11 +23,15 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+     
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role', 'is_blocked'
+        'role', 
+        'failed_login_attempts', // Add this
+        'blocked', // Add this if applicable
     ];
 
     /**
@@ -78,4 +82,16 @@ class User extends Authenticatable
     public function customers() {
         return $this->hasMany(Customer::class, 'created_by');
     }
+
+    public function isBlocked()
+    {
+        return $this->blocked; // Assuming 'blocked' is a boolean column
+    }
+
+public function block()
+{
+    $this->failed_attempts = 0; // Reset failed attempts
+    $this->blocked = true;
+    $this->save();
+}
 }

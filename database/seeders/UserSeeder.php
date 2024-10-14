@@ -77,6 +77,16 @@ class UserSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+            [
+                'id' => 7,
+                'name' => 'Customer Service 2',
+                'username' => 'cs2',
+                'email' => 'cs2@test.com',
+                'password' => Hash::make('Cs!Service1234'), // Updated password
+                'roles' => 'customer_service',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ]);
     }
 }

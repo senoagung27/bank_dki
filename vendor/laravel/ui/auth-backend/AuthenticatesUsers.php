@@ -90,6 +90,13 @@ trait AuthenticatesUsers
         ]);
     }
 
+    protected function sendBlockedResponse(Request $request)
+{
+    throw ValidationException::withMessages([
+        'email' => ['Your account has been blocked due to too many failed login attempts. Please contact support.'],
+    ]);
+}
+
     /**
      * Attempt to log the user into the application.
      *
@@ -98,9 +105,24 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
-        return $this->guard()->attempt(
-            $this->credentials($request), $request->boolean('remember')
-        );
+        // return $this->guard()->attempt(
+        //     $this->credentials($request), $request->boolean('remember')
+        // );
+        $credentials = $this->credentials($request);
+    $user = \App\Models\User::where($this->username(), $credentials[$this->username()])->first();
+
+    if ($user && $user->failed_login_attempts >= 3) {
+        return false; // Account locked
+    }
+
+    $loginSuccessful = $this->guard()->attempt($credentials, $request->boolean('remember'));
+
+    if (!$loginSuccessful && $user) {
+        $user->increment('failed_login_attempts');
+        $user->save();
+    }
+
+    return $loginSuccessful;
     }
 
     /**
@@ -157,6 +179,12 @@ trait AuthenticatesUsers
      */
     protected function sendFailedLoginResponse(Request $request)
     {
+        if ($this->hasTooManyLoginAttempts($request)) {
+            throw ValidationException::withMessages([
+                $this->username() => ['Your account is temporarily locked due to too many failed login attempts. Please contact support.'],
+            ]);
+        }
+    
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
         ]);
@@ -171,6 +199,22 @@ trait AuthenticatesUsers
     {
         return 'email';
     }
+
+
+    public function unlockUser($email)
+{
+    $user = User::where('email', $email)->first();
+
+    if ($user) {
+        $user->failed_login_attempts = 0; // Reset the attempts
+        $user->save();
+
+        return response()->json(['message' => 'User account unlocked successfully.']);
+    }
+
+    return response()->json(['message' => 'User not found.'], 404);
+}
+
 
     /**
      * Log the user out of the application.

@@ -617,7 +617,7 @@
                                     </script>
                                     , made with ❤️ by
                                     <a href="https://pixinvent.com" target="_blank"
-                                        class="footer-link text-primary fw-medium">NADA</a>
+                                        class="footer-link text-primary fw-medium">Seno Agung</a>
                                 </div>
                                 <div class="d-none d-lg-inline-block">
                                     <a href="https://themeforest.net/licenses/standard" class="footer-link me-4"

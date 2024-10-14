@@ -113,7 +113,7 @@ class CustomerController extends Controller
         ]);
 
         // Send email to CS
-        Mail::to('cs@test.com')->send(new \App\Mail\ApprovalNotification($customer));
+        // Mail::to('cs@test.com')->send(new \App\Mail\ApprovalNotification($customer));
         
         return redirect('/customer')->with('success', 'Pengajuan telah disetujui.');
     }
